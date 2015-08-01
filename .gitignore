@@ -7,3 +7,7 @@ lib/Middlewares/Third_Party/LwIP/
 lib/Middlewares/Third_Party/PolarSSL/
 *.o
 *.o.d
+*.bin
+*.elf
+*.hex
+*.map
