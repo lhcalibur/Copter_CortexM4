@@ -5,3 +5,5 @@ lib/Middlewares/Third_Party/FatFs/
 lib/Middlewares/Third_Party/LibJPEG/
 lib/Middlewares/Third_Party/LwIP/
 lib/Middlewares/Third_Party/PolarSSL/
+*.o
+*.o.d
