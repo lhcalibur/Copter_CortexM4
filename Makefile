@@ -47,10 +47,10 @@ OBJ = $(CRT0)
 OBJ += syscalls.o
 # ST Lib
 VPATH += $(ST_HAL_DRIVER)/Src
-VPATH += $(ST_BSP)
+VPATH += $(ST_BSP)/STM32F4xx-Nucleo
 
 INCLUDES += -I$(ST_HAL_DRIVER)/Inc
-INCLUDES += -I$(ST_BSP)
+INCLUDES += -I$(ST_BSP)/STM32F4xx-Nucleo
 
 OBJ +=  stm32f4xx_nucleo.o
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_HAL_DRIVER)/Src/*.c)))
