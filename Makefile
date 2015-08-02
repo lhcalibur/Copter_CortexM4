@@ -48,12 +48,30 @@ OBJ += syscalls.o
 # ST Lib
 VPATH += $(ST_HAL_DRIVER)/Src
 VPATH += $(ST_BSP)/STM32F4xx-Nucleo
+VPATH += $(ST_BSP)/Components/lsm6ds0
+VPATH += $(ST_BSP)/Components/lsm6ds3
+VPATH += $(ST_BSP)/Components/hts221
+VPATH += $(ST_BSP)/Components/lis3mdl
+VPATH += $(ST_BSP)/Components/lps25h
+VPATH += $(ST_BSP)/Components/lps25hb
+VPATH += $(ST_BSP)/X_NUCLEO_IKS01A1
 
 INCLUDES += -I$(ST_HAL_DRIVER)/Inc
 INCLUDES += -I$(ST_BSP)/STM32F4xx-Nucleo
+INCLUDES += -I$(ST_BSP)/Components/Common
+INCLUDES += -I$(ST_BSP)/Components/lsm6ds0
+INCLUDES += -I$(ST_BSP)/Components/lsm6ds3
+INCLUDES += -I$(ST_BSP)/Components/hts221
+INCLUDES += -I$(ST_BSP)/Components/lis3mdl
+INCLUDES += -I$(ST_BSP)/Components/lps25h
+INCLUDES += -I$(ST_BSP)/Components/lps25hb
+INCLUDES += -I$(ST_BSP)/X_NUCLEO_IKS01A1
 
 OBJ +=  stm32f4xx_nucleo.o
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_HAL_DRIVER)/Src/*.c)))
+OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lsm6ds0/*.c)))
+OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lsm6ds3/*.c)))
+OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/X_NUCLEO_IKS01A1/*.c)))
 
 # RTOS
 VPATH += $(RTOS)
@@ -69,6 +87,7 @@ OBJ += list.o tasks.o queue.o timers.o $(MEMMANG_OBJ)
 # Project
 VPATH += $(DRIVERS)/src $(MODULES)/src $(PLATFORM)/src $(INIT) $(HAL)/src
 OBJ += main.o stm32f4xx_hal_msp.o stm32f4xx_it.o uart.o platform.o error_handler.o
+OBJ += stabilizer.o system.o imu.o
 
 INCLUDES += -I$(DRIVERS)/inc -I$(MODULES)/inc -I$(PLATFORM)/inc -I$(HAL)/inc -I$(CONFIGS)
 
@@ -87,7 +106,7 @@ PROCESSOR = -mcpu=cortex-m4 -mthumb
 endif
 
 LIBS = --specs=rdimon.specs -Wl,--start-group -lgcc -lc -lm -lrdimon -lnosys -Wl,--end-group
-STFLAGS = -DSTM32F411xE -DUSE_HAL_DRIVER -DHSE_VALUE=8000000 
+STFLAGS = -DUSE_STM32F4XX_NUCLEO -DSTM32F411xE -DUSE_HAL_DRIVER -DHSE_VALUE=8000000 
 ifeq ($(USE_FPU), 1)
 STFLAGS += -D__FPU_USED
 endif

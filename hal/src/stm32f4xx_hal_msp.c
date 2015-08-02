@@ -72,7 +72,10 @@ void HAL_MspInit(void)
 	HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 	SystemClock_Config();
+	/* Initialize LEDs */
 	BSP_LED_Init(LED2);
+	BSP_LED_Off(LED2);
+
 }
 
 /**

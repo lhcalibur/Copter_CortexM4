@@ -3,11 +3,12 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include "system.h"
 #include "uart.h"
 int main(void)
 {
 	HAL_Init();
-	USART2_UART_Init();
+	systemLaunch();
 	vTaskStartScheduler();
 	while(1);	
 	return 0;
