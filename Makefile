@@ -71,6 +71,7 @@ OBJ +=  stm32f4xx_nucleo.o
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_HAL_DRIVER)/Src/*.c)))
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lsm6ds0/*.c)))
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lsm6ds3/*.c)))
+OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lis3mdl/*.c)))
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/X_NUCLEO_IKS01A1/*.c)))
 
 # RTOS
@@ -87,7 +88,7 @@ OBJ += list.o tasks.o queue.o timers.o $(MEMMANG_OBJ)
 # Project
 VPATH += $(DRIVERS)/src $(MODULES)/src $(PLATFORM)/src $(INIT) $(HAL)/src
 OBJ += main.o stm32f4xx_hal_msp.o stm32f4xx_it.o uart.o platform.o error_handler.o
-OBJ += stabilizer.o system.o imu.o
+OBJ += stabilizer.o system.o imu.o MARG_Filter.o
 
 INCLUDES += -I$(DRIVERS)/inc -I$(MODULES)/inc -I$(PLATFORM)/inc -I$(HAL)/inc -I$(CONFIGS)
 

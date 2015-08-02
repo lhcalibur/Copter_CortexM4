@@ -11,6 +11,8 @@
 #include "uart.h"
 #include "stabilizer.h"
 
+/* Private variable */
+static bool selftestPassed = false;
 static bool isInit = false;
 
 /* System wide synchronisation */
@@ -38,6 +40,19 @@ static void systemTask(void *arg)
 
 	stabilizerInit();
 
+	//Start the firmware
+	if(pass)
+	{
+		selftestPassed = true;
+		systemStart();
+	}
+	else
+	{
+		
+	}
+	for(; ;);
+
+
 }
 
 void systemInit(void)
@@ -49,4 +64,21 @@ void systemInit(void)
 	xSemaphoreTake(canStartMutex, portMAX_DELAY);
 
 	isInit = true;
+}
+
+void systemWaitStart(void)
+{
+	//This permits to guarantee that the system task is initialized before other
+	//tasks waits for the start event.
+	while(!isInit)
+		vTaskDelay(2);
+
+	xSemaphoreTake(canStartMutex, portMAX_DELAY);
+	xSemaphoreGive(canStartMutex);
+}
+
+/* Global system variables */
+void systemStart(void)
+{
+  xSemaphoreGive(canStartMutex);
 }

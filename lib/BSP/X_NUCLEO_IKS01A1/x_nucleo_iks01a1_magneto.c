@@ -90,7 +90,8 @@ MAGNETO_StatusTypeDef BSP_MAGNETO_Init(void)
     /* Configure sensor */
     InitStructure.M_FullScale = LIS3MDL_M_FS_4;
     InitStructure.M_OperatingMode = LIS3MDL_M_MD_CONTINUOUS;
-    InitStructure.M_XYOperativeMode = LIS3MDL_M_OM_HP;
+    /* change to HUP */
+    InitStructure.M_XYOperativeMode = LIS3MDL_M_OM_UHP;
     InitStructure.M_OutputDataRate = LIS3MDL_M_DO_80;
     
     /* magneto sensor init */
