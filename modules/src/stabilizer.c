@@ -97,7 +97,7 @@ static void stabilizerTask(void* param)
 		filterUpdate_mars(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z,mag.x,mag.y,mag.z);
 
 		EulerUpdate(&eulerRollActual, &eulerPitchActual, &eulerYawActual);
-		printf("%4.5f %4.5f %4.5f\n",eulerRollActual,eulerPitchActual,eulerYawActual);
+		DEBUG_PRINT("%4.5f %4.5f %4.5f\n",eulerRollActual,eulerPitchActual,eulerYawActual);
 
 
 
