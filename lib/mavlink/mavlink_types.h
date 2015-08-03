@@ -225,4 +225,5 @@ typedef struct __mavlink_status {
 #define MAVLINK_BIG_ENDIAN 0
 #define MAVLINK_LITTLE_ENDIAN 1
 
+
 #endif /* MAVLINK_TYPES_H_ */

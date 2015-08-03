@@ -4,7 +4,7 @@
 /**
  * IMU update frequency dictates the overall update frequency.
  */
-#define IMU_UPDATE_FREQ   500
+#define IMU_UPDATE_FREQ   400
 #define IMU_UPDATE_DT     (float)(1.0/IMU_UPDATE_FREQ)
 
 

@@ -6,7 +6,7 @@ USE_FPU	?= 1
 
 # Now #define for project
 ifeq ($(DEBUG), 1)
-CFLAGS += -DDEBUG_PRINT_ON_UART
+#CFLAGS += -DDEBUG_PRINT_ON_UART
 endif
 
 
@@ -74,6 +74,10 @@ OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lsm6ds3/*.c))
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/Components/lis3mdl/*.c)))
 OBJ += $(patsubst %.c,%.o,$(notdir $(wildcard $(ST_BSP)/X_NUCLEO_IKS01A1/*.c)))
 
+# MAVLINK
+INCLUDES += -I$(LIB)/mavlink
+INCLUDES += -I$(LIB)/mavlink/common
+
 # RTOS
 VPATH += $(RTOS)
 VPATH += $(RTOS)/portable/GCC/ARM_CM4F
@@ -88,7 +92,7 @@ OBJ += list.o tasks.o queue.o timers.o $(MEMMANG_OBJ)
 # Project
 VPATH += $(DRIVERS)/src $(MODULES)/src $(PLATFORM)/src $(INIT) $(HAL)/src
 OBJ += main.o stm32f4xx_hal_msp.o stm32f4xx_it.o uart.o platform.o error_handler.o
-OBJ += stabilizer.o system.o imu.o MARG_Filter.o
+OBJ += stabilizer.o system.o imu.o MahonyAHRS.o
 
 INCLUDES += -I$(DRIVERS)/inc -I$(MODULES)/inc -I$(PLATFORM)/inc -I$(HAL)/inc -I$(CONFIGS)
 

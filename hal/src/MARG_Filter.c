@@ -1,7 +1,7 @@
 // Math library required for ‘sqrt’
 #include <math.h>
 // System constants
-#define deltat 0.002f // sampling period in seconds (shown as 1 ms)
+#define deltat 0.0025f // sampling period in seconds (shown as 1 ms)
 #define gyroMeasError 3.14159265358979 * (5.0f / 180.0f) // gyroscope measurement error in rad/s (shown as 5 deg/s)
 #define gyroMeasDrift 3.14159265358979 * (0.2f / 180.0f) // gyroscope measurement error in rad/s/s (shown as 0.2f deg/s/s)
 #define beta sqrt(3.0f / 4.0f) * gyroMeasError // compute beta
@@ -150,3 +150,9 @@ void EulerUpdate(float *roll, float *pitch, float *yaw)
 	*pitch = -asin(2*(SEq_2*SEq_4+SEq_1*SEq_3)) *180.0f/M_PI;
 	*roll= atan2(2*(SEq_3*SEq_4-SEq_1*SEq_2),2*(SEq_1*SEq_1-SEq_4*SEq_4)-1) *180.0f/M_PI;
 }
+
+#define q0 SEq_1
+#define q1 SEq_2
+#define q2 SEq_3
+#define q3 SEq_4
+

@@ -1,5 +1,5 @@
 /** @file
- *	@brief MAVLink comm protocol built from common.xml
+ *	@brief MAVLink comm protocol built from ardupilotmega.xml
  *	@see http://mavlink.org
  */
 #ifndef MAVLINK_H
@@ -21,9 +21,7 @@
 #define MAVLINK_CRC_EXTRA 1
 #endif
 
-
 #include "version.h"
-#include "common.h"
-
+#include "ardupilotmega.h"
 
 #endif // MAVLINK_H
