@@ -176,14 +176,14 @@ void imuRead(Axis3f* gyroOut, Axis3f* accOut, Axis3f* magOut)
 
 
 	// Re-map outputs
-	/*
 	gyroOut->x = (gyroMpu.x - gyroBias.bias.x) * G_sensitivity / 1000.0f;
 	gyroOut->y = (gyroMpu.y - gyroBias.bias.y) * G_sensitivity / 1000.0f;
-	gyoroOut->z = (gyroMpu.z - gyroBias.bias.z) * G_sensitivity / 1000.0f;
-	*/
+	gyroOut->z = (gyroMpu.z - gyroBias.bias.z) * G_sensitivity / 1000.0f;
+	/*
 	gyroOut->x = (gyroMpu.x) * G_sensitivity / 1000.0f;
 	gyroOut->y = (gyroMpu.y) * G_sensitivity / 1000.0f;
 	gyroOut->z = (gyroMpu.z) * G_sensitivity / 1000.0f;
+	*/
 
 	gyroOut->x = - gyroOut->x * M_PI / 180.0f;
 	gyroOut->y = gyroOut->y * M_PI / 180.0f;

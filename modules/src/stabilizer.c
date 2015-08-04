@@ -85,7 +85,8 @@ static void stabilizerTask(void* param)
 
 			//filterUpdate(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z);
 			//filterUpdate_mars(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z,mag.x,mag.y,mag.z);
-			MahonyAHRSupdate(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z,mag.x,mag.y,mag.z);
+			//MahonyAHRSupdate(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z,mag.x,mag.y,mag.z);
+			MadgwickAHRSupdate(gyro.x, gyro.y, gyro.z, acc.x, acc.y, acc.z,mag.x,mag.y,mag.z);
 
 			//EulerUpdate(&eulerRollActual, &eulerPitchActual, &eulerYawActual);
 			sensfusion6GetEulerRPY(&eulerRollActual, &eulerPitchActual, &eulerYawActual);

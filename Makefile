@@ -96,7 +96,9 @@ OBJ += list.o tasks.o queue.o timers.o $(MEMMANG_OBJ)
 # Project
 VPATH += $(DRIVERS)/src $(MODULES)/src $(PLATFORM)/src $(INIT) $(HAL)/src
 OBJ += main.o stm32f4xx_hal_msp.o stm32f4xx_it.o uart.o platform.o error_handler.o
-OBJ += stabilizer.o system.o imu.o filter.o MahonyAHRS.o
+#OBJ += stabilizer.o system.o imu.o filter.o MahonyAHRS.o
+OBJ += stabilizer.o system.o imu.o filter.o MadgwickAHRS.o
+#OBJ += stabilizer.o system.o imu.o filter.o MARG_Filter.o
 
 INCLUDES += -I$(DRIVERS)/inc -I$(MODULES)/inc -I$(PLATFORM)/inc -I$(HAL)/inc -I$(CONFIGS)
 
