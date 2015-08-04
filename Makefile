@@ -1,13 +1,17 @@
 #CROSS_COMPILE	?= arm-none-eabi-
 CROSS_COMPILE	?= /Users/cooltouya/Programs/linaro-arm-none-eabi/bin/arm-none-eabi-
 
-DEBUG	?= 1
+DEBUG	?= 0
 USE_FPU	?= 1
 
 # Now #define for project
 ifeq ($(DEBUG), 1)
-#CFLAGS += -DDEBUG_PRINT_ON_UART
+	CFLAGS += -DDEBUG_PRINT_ON_UART
+else
+	CFLAGS += -DUSE_MAVLINK
 endif
+
+#CFLAGS += -DUSE_MAVLINK
 
 
 ######## Location Configuration ########
@@ -92,7 +96,7 @@ OBJ += list.o tasks.o queue.o timers.o $(MEMMANG_OBJ)
 # Project
 VPATH += $(DRIVERS)/src $(MODULES)/src $(PLATFORM)/src $(INIT) $(HAL)/src
 OBJ += main.o stm32f4xx_hal_msp.o stm32f4xx_it.o uart.o platform.o error_handler.o
-OBJ += stabilizer.o system.o imu.o MahonyAHRS.o
+OBJ += stabilizer.o system.o imu.o filter.o MahonyAHRS.o
 
 INCLUDES += -I$(DRIVERS)/inc -I$(MODULES)/inc -I$(PLATFORM)/inc -I$(HAL)/inc -I$(CONFIGS)
 

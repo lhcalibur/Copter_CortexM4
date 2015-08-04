@@ -45,6 +45,11 @@
 //#define USBLINK_TASK_PRI        3
 
 
+#ifdef USE_MAVLINK
+	#define MAVLINK(__code__)	__code__
+#else
+	#define MAVLINK(__code__)	
+#endif
 
 
 
