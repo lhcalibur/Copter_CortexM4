@@ -64,17 +64,29 @@ void stabilizerInit(void)
 static void stabilizerTask(void* param)
 {
 	uint32_t lastWakeTime;
+	//uint32_t tempTime;
 	uint16_t heartb = 0;
 	//uint32_t data[6];
 	//Wait for the system to be fully started to start stabilization loop
 	systemWaitStart();
-
+	
 	lastWakeTime = xTaskGetTickCount ();
+
+		
+
 
 	for( ; ;)
 	{
+		//tempTime = lastWakeTime;
 		vTaskDelayUntil(&lastWakeTime, F2T(IMU_UPDATE_FREQ)); // 400Hz
 		heartb ++;
+		/*
+		if (lastWakeTime < tempTime) {
+			tempTime = (0 - tempTime) + lastWakeTime;
+		} else {
+			tempTime = lastWakeTime - tempTime;
+		}
+		*/
 		while (heartb >= 400) {					// 1Hz
 			MAVLINK(mavlink_msg_heartbeat_send(MAVLINK_COMM_0, MAV_TYPE_QUADROTOR, MAV_AUTOPILOT_GENERIC, MAV_MODE_PREFLIGHT, 0, MAV_STATE_STANDBY);)
 			heartb = 0;
