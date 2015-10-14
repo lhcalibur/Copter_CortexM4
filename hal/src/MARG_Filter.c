@@ -1,7 +1,7 @@
 // Math library required for ‘sqrt’
 #include <math.h>
 // System constants
-#define deltat 0.0025f // sampling period in seconds (shown as 1 ms)
+#define deltat 0.0100f // sampling period in seconds (shown as 1 ms)
 #define gyroMeasError 3.14159265358979 * (5.0f / 180.0f) // gyroscope measurement error in rad/s (shown as 5 deg/s)
 #define gyroMeasDrift 3.14159265358979 * (0.2f / 180.0f) // gyroscope measurement error in rad/s/s (shown as 0.2f deg/s/s)
 #define beta sqrt(3.0f / 4.0f) * gyroMeasError // compute beta

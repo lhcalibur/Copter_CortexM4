@@ -5,7 +5,7 @@
 /**
  * IMU update frequency dictates the overall update frequency.
  */
-#define IMU_UPDATE_FREQ   400
+#define IMU_UPDATE_FREQ   500
 #define IMU_UPDATE_DT     (float)(1.0/IMU_UPDATE_FREQ)
 
 /**
@@ -28,4 +28,5 @@
 void imuInit(void);
 void imuRead(Axis3f* gyroOut, Axis3f* accOut, Axis3f* magOut);
 bool imu6IsCalibrated(void);
+bool imuHasBarometer(void);
 #endif /* IMU_H_ */

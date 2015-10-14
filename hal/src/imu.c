@@ -4,6 +4,7 @@
 #include "x_nucleo_iks01a1.h"
 #include "x_nucleo_iks01a1_imu_6axes.h"
 #include "x_nucleo_iks01a1_magneto.h"
+#include "x_nucleo_iks01a1_pressure.h"
 
 #include <stdbool.h>
 #include <math.h>
@@ -24,7 +25,7 @@
 
 #define IMU_NBR_OF_BIAS_SAMPLES  128
 
-#define GYRO_VARIANCE_BASE        500
+#define GYRO_VARIANCE_BASE        2000
 #define GYRO_VARIANCE_THRESHOLD_X (GYRO_VARIANCE_BASE)
 #define GYRO_VARIANCE_THRESHOLD_Y (GYRO_VARIANCE_BASE)
 #define GYRO_VARIANCE_THRESHOLD_Z (GYRO_VARIANCE_BASE)
@@ -59,8 +60,6 @@ static uint8_t    imuAccLpfAttFactor;
 //int __attribute__((used)) __errno;
 
 static bool isInit = false;
-static bool isMagPresent;
-static bool isBaroPresent;
 
 static void imuBiasInit(BiasObj* bias);
 static void imuCalculateBiasMean(BiasObj* bias, Axis3i32* meanOut);
@@ -78,20 +77,19 @@ void imuInit(void)
 	if(isInit)
 		return;
 
-	isMagPresent = false;
-	isBaroPresent = false;
-
 	// Wait for sensors to startup
 	while (xTaskGetTickCount() < M2T(IMU_STARTUP_TIME_MS));
 
 
 	/* Initialize the IMU 6-axes */
 	BSP_IMU_6AXES_Init();
-	BSP_IMU_6AXES_X_Set_ODR(476.0f);
+	BSP_IMU_6AXES_X_Set_ODR(500.0f);
 	BSP_IMU_6AXES_X_Set_FS(8.0f);
-	BSP_IMU_6AXES_G_Set_ODR(476.0f);
+	BSP_IMU_6AXES_G_Set_ODR(500.0f);
 	BSP_IMU_6AXES_G_Set_FS(2000.0f);
 	BSP_MAGNETO_Init();
+	BSP_PRESSURE_Init();
+
 
 	imuBiasInit(&gyroBias);
 #ifdef IMU_TAKE_ACCEL_BIAS
@@ -176,9 +174,11 @@ void imuRead(Axis3f* gyroOut, Axis3f* accOut, Axis3f* magOut)
 
 
 	// Re-map outputs
+	
 	gyroOut->x = (gyroMpu.x - gyroBias.bias.x) * G_sensitivity / 1000.0f;
 	gyroOut->y = (gyroMpu.y - gyroBias.bias.y) * G_sensitivity / 1000.0f;
 	gyroOut->z = (gyroMpu.z - gyroBias.bias.z) * G_sensitivity / 1000.0f;
+
 	/*
 	gyroOut->x = (gyroMpu.x) * G_sensitivity / 1000.0f;
 	gyroOut->y = (gyroMpu.y) * G_sensitivity / 1000.0f;
@@ -195,22 +195,22 @@ void imuRead(Axis3f* gyroOut, Axis3f* accOut, Axis3f* magOut)
 	accOut->y = (accelLPFAligned.y - accelBias.bias.y) * X_sensitivity / 1000.0f;
 	accOut->z = (accelLPFAligned.z - accelBias.bias.z) * X_sensitivity / 1000.0f;
 	*/
-	accOut->x = - (accelMpu.x - accelBias.bias.x) * X_sensitivity / 1000.0f;
-	accOut->y = (accelMpu.y - accelBias.bias.y) * X_sensitivity / 1000.0f;
-	accOut->z = (accelMpu.z - accelBias.bias.z) * X_sensitivity / 1000.0f;
+	accOut->x = - (accelLPF.x - accelBias.bias.x) * X_sensitivity / 1000.0f;
+	accOut->y = (accelLPF.y - accelBias.bias.y) * X_sensitivity / 1000.0f;
+	accOut->z = (accelLPF.z - accelBias.bias.z) * X_sensitivity / 1000.0f;
 
 #else
 	//accOut->x = (accelLPFAligned.x) * X_sensitivity / 1000.0f;
 	//accOut->y = (accelLPFAligned.y) * X_sensitivity / 1000.0f;
 	//accOut->z = (accelLPFAligned.z) * X_sensitivity / 1000.0f;
-	accOut->x =  - (accelLPF.x) * X_sensitivity / 1000.0f;
-	accOut->y = (accelLPF.y) * X_sensitivity / 1000.0f;
-	accOut->z = (accelLPF.z) * X_sensitivity / 1000.0f;
+	accOut->x =  - (accelLPF.x) * X_sensitivity;
+	accOut->y = (accelLPF.y) * X_sensitivity;
+	accOut->z = (accelLPF.z) * X_sensitivity;
 
 #endif
-	magOut->x = (float)mag.x / 1000.0f;
-	magOut->y = (float)mag.y / 1000.0f;
-	magOut->z = (float)mag.z / 1000.0f;
+	magOut->x = (float)mag.x / 10000.0f;
+	magOut->y = (float)mag.y / 10000.0f;
+	magOut->z = (float)mag.z / 10000.0f;
 
 
 }
@@ -372,3 +372,8 @@ static void imuAccAlignToGravity(Axis3i16* in, Axis3i16* out)
   out->z = ry.z;
 }
 */
+bool imuHasBarometer(void)
+{
+	return BSP_PRESSURE_isInitialized();
+}
+

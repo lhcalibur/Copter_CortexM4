@@ -20,9 +20,9 @@
 //---------------------------------------------------------------------------------------------------
 // Definitions
 
-#define sampleFreq	400.0f			// sample frequency in Hz
-#define twoKpDef	(2.0f * 8.0f)	// 2 * proportional gain
-#define twoKiDef	(2.0f * 1.6f)	// 2 * integral gain
+#define sampleFreq	100.0f			// sample frequency in Hz
+#define twoKpDef	(2.0f * 0.4f)	// 2 * proportional gain
+#define twoKiDef	(2.0f * 0.001f)	// 2 * integral gain
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions
@@ -240,7 +240,7 @@ void sensfusion6GetEulerRPY(float* roll, float* pitch, float* yaw)
   if (gx<-1) gx=-1;
 
   *yaw = atan2(2*(q0*q3 + q1*q2), q0*q0 + q1*q1 - q2*q2 - q3*q3) * 180 / M_PI;
-  *pitch = asin(gx) * 180 / M_PI; //Pitch seems to be inverted
+  *pitch = - asin(gx) * 180 / M_PI; //Pitch seems to be inverted
   *roll = atan2(gy, gz) * 180 / M_PI;
 }
 
