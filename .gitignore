@@ -11,3 +11,4 @@ lib/Middlewares/Third_Party/PolarSSL/
 *.elf
 *.hex
 *.map
+cscope*
